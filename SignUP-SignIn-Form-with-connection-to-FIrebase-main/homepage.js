@@ -3,7 +3,7 @@ import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/fire
 import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCxO2w2oE9re0n3agRbFYLCpQrIz1Nn1g8",
+    apiKey: "YOUR_API_KEY_HERE",
     authDomain: "login-form-64b0e.firebaseapp.com",
     projectId: "login-form-64b0e",
     storageBucket: "login-form-64b0e.firebasestorage.app",
