@@ -2,9 +2,9 @@ import os
 from flask import Flask, redirect, render_template, request, jsonify
 from PIL import Image
 import torchvision.transforms.functional as TF
-import CNN
 import numpy as np
 import torch
+import torch.nn as nn
 import pandas as pd
 
 # LangChain & Llama setup
@@ -26,13 +26,36 @@ else:
 disease_info = pd.read_csv('disease_info.csv', encoding='cp1252')
 supplement_info = pd.read_csv('supplement_info.csv', encoding='cp1252')
 
-# Load CNN model (ResNet18)
-import torchvision.models as models
-import torch.nn as nn
+# Model architecture exactly matching plant_disease_model_m3.pt
+class PlantDiseaseModel(nn.Module):
+    def __init__(self, num_classes=38):
+        super().__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(3, 16, 3, padding=1),    # features.0  224→224
+            nn.ReLU(),                           # features.1
+            nn.MaxPool2d(2),                     # features.2  224→112
+            nn.Conv2d(16, 32, 3, padding=1),    # features.3  112→112
+            nn.ReLU(),                           # features.4
+            nn.MaxPool2d(2),                     # features.5  112→56
+            nn.Conv2d(32, 64, 3, padding=1),    # features.6  56→56
+            nn.ReLU(),                           # features.7
+            nn.MaxPool2d(2),                     # features.8  56→28
+        )
+        # After 3x MaxPool on 224: 224/8 = 28 → 28x28x64 = 50176
+        self.classifier = nn.Sequential(
+            nn.Dropout(0.4),                    # classifier.0
+            nn.Linear(50176, 128),              # classifier.1
+            nn.ReLU(),                          # classifier.2
+            nn.Dropout(0.4),                    # classifier.3
+            nn.Linear(128, num_classes),        # classifier.4
+        )
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        return self.classifier(x)
 
-model = models.resnet18(pretrained=False)
-model.fc = nn.Linear(model.fc.in_features, 39)
-model.load_state_dict(torch.load("plant_disease_modellatest.pt", map_location=device))
+model = PlantDiseaseModel(num_classes=38)
+model.load_state_dict(torch.load("plant_disease_model_m3.pt", map_location=device), strict=False)
 model.eval()
 
 # Load vector DB and LLM (Commented out to prevent crashes if models are missing)
