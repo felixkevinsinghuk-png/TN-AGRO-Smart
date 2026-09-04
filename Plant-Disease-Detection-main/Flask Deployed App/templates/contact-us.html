@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block pagetitle %}
+Contact Us
+{% endblock pagetitle %}
+
+{% block body %}
+
+<div class="row mb-5 text-center laptop" style="padding-top: 40px;">
+    <div class="col-lg-10 mx-auto">
+        <h1 class="display-4" style="font-weight: 700; color: var(--primary);">📞 Contact Us 📞</h1>
+        <p class="lead" style="color: var(--text-muted);">For Any Queries &amp; Suggestions Contact Us. We Are Happy To Help.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 p-3 mb-5">
+    <!-- Member 1 -->
+    <div class="col">
+        <div class="glass-card text-center">
+            <img src="{{ url_for('static', filename='felix.jpg') }}" alt="FELIX KEVINSINGH" class="rounded-circle mb-3" height="100" width="100" style="object-fit:cover; border: 3px solid var(--primary);">
+            <h3 style="color: var(--text-main); font-size: 1.1rem;">FELIX KEVINSINGH</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Machine Learning, Deep Learning and AI.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="mailto:felixkevinsingh141125@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" height="26"></a>
+                <a href="https://www.instagram.com/felix_kevinsingh14" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" height="26"></a>
+                <a href="https://in.linkedin.com/in/felix-kevinsingh-t" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" height="26"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member 2 -->
+    <div class="col">
+        <div class="glass-card text-center">
+            <img src="https://via.placeholder.com/100" alt="JAMES ROBIN RAJ" class="rounded-circle mb-3" height="100" width="100" style="object-fit:cover; border: 3px solid var(--primary);">
+            <h3 style="color: var(--text-main); font-size: 1.1rem;">JAMES ROBIN RAJ</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Machine Learning, NLP and AI Chatbot.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="mailto:jamesrobinraj.p2004@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" height="26"></a>
+                <a href="https://www.instagram.com/jamesrobin_official27" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" height="26"></a>
+                <a href="https://www.linkedin.com/in/james-robin-raj-p" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" height="26"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member 3 -->
+    <div class="col">
+        <div class="glass-card text-center">
+            <img src="https://via.placeholder.com/100" alt="LAKSHMISIMHA REDDY" class="rounded-circle mb-3" height="100" width="100" style="object-fit:cover; border: 3px solid var(--primary);">
+            <h3 style="color: var(--text-main); font-size: 1.1rem;">LAKSHMISIMHA REDDY</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">UI/UX &amp; Frontend Developer.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="mailto:kasireddylakshmisimhareddy@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" height="26"></a>
+                <a href="https://www.instagram.com/mr.chintu__45" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" height="26"></a>
+                <a href="https://www.linkedin.com/in/lakshmisimha-reddy-kasireddy" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" height="26"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member 4 -->
+    <div class="col">
+        <div class="glass-card text-center">
+            <img src="https://via.placeholder.com/100" alt="KEVIN JAYRAJ" class="rounded-circle mb-3" height="100" width="100" style="object-fit:cover; border: 3px solid var(--primary);">
+            <h3 style="color: var(--text-main); font-size: 1.1rem;">KEVIN JAYRAJ</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Data Science &amp; DevOps enthusiast.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="mailto:kevinjeyaraj04@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" height="26"></a>
+                <a href="https://www.instagram.com/kevin" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" height="26"></a>
+                <a href="https://www.linkedin.com/in/kevin-jeyaraj-335ba3249" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" height="26"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGRO Smart - AI Engine</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary: #00e676;
+      --primary-dark: #00c853;
+      --glass-bg: rgba(15, 25, 17, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f1f3f5;
+      --text-muted: #a0aec0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-image: linear-gradient(rgba(10, 17, 12, 0.82), rgba(10, 17, 12, 0.92)),
+        url("https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop");
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .navbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 15px 30px;
+    }
+    .navbar-brand { color: var(--primary) !important; font-weight: 700; font-size: 1.3rem; }
+    .nav-link { color: var(--text-main) !important; font-weight: 500; margin: 0 8px; transition: color 0.3s; }
+    .nav-link:hover { color: var(--primary) !important; }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.37);
+      color: var(--text-main);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+    .glass-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .glass-card h5 { color: var(--primary); font-weight: 600; margin-bottom: 15px; }
+    .glass-card p, .glass-card ol { color: var(--text-muted); line-height: 1.7; }
+    .glass-card ol li { margin-bottom: 8px; }
+
+    .custom-file {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .custom-file label {
+      background: rgba(255,255,255,0.07);
+      border: 1px dashed var(--primary);
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: var(--text-main);
+      width: 100%;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .custom-file label:hover { background: rgba(0,230,118,0.1); }
+    .custom-file span { color: var(--primary); font-size: 0.9rem; }
+
+    .btn-premium {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #000;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,230,118,0.3);
+      cursor: pointer;
+    }
+    .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,230,118,0.5); }
+
+    .btn-outline-premium {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-outline-premium:hover { background: var(--primary); color: #000; }
+  </style>
+  <script type="module" src="{{ url_for('static', filename='homepage.js') }}"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/homepage">🌱 AGRO_Smart</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/ai-engine">AI Engine</a></li>
+        </ul>
+      </div>
+      <button id="logout" style="background:transparent; color:#ff5252; border:1px solid #ff5252; border-radius:20px; padding:6px 16px; font-size:0.85rem; font-weight:600; transition:all 0.3s ease; cursor:pointer;">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <!-- Title -->
+    <div class="row mb-5 text-center">
+      <div class="col-lg-10 mx-auto">
+        <h1 style="font-weight: 700; color: var(--primary); font-size: 2.8rem;">🍀 AI Engine 🍀</h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">Upload your plant's leaf image and let AI detect the disease instantly</p>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="row gap-4 mb-5">
+      <!-- Info card -->
+      <div class="col-md mx-auto">
+        <div class="glass-card">
+          <h5>Why detect disease in plants?</h5>
+          <p>Plant diseases affect the growth of their respective species. Proper diagnosis is one of the most important aspects of plant pathology training. Without correct identification of the disease and its cause, control measures can be a waste of time and money, leading to further plant losses.</p>
+        </div>
+      </div>
+
+      <!-- Upload card -->
+      <div class="col-md mx-auto">
+        <div class="glass-card text-center">
+          <img src="https://www.pngjoy.com/pngl/250/4840262_plants-png-indoors-tropical-plant-png-hd-png.png"
+               height="200" alt="Plant" width="150" class="d-block mx-auto mb-3">
+
+          <form action="/submit" method="POST" enctype="multipart/form-data">
+            <div class="custom-file">
+              <input type="file" id="actual-btn" hidden name="image" />
+              <label for="actual-btn"><i class="fas fa-upload"></i> Choose File</label>
+              <label id="camera-btn" style="cursor:pointer;"><i class="fas fa-camera"></i> Open Camera</label>
+              <span id="file-chosen">No file chosen</span>
+            </div>
+
+            <div id="camera-container" style="display:none; margin-bottom:15px;">
+              <video id="camera-feed" width="100%" height="auto" autoplay></video>
+              <button type="button" id="capture-btn" class="btn-outline-premium mt-2">Capture Photo</button>
+            </div>
+
+            <img id="preview" src="#" alt="Preview" style="display:none; max-width:100%; border-radius:10px; margin-bottom:15px;" />
+
+            <p style="color:var(--text-muted); font-size:0.85rem;">Upload your plant's leaf image and see the magic of AI.</p>
+            <button type="submit" class="btn-premium w-100">Submit for Analysis</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Prevention card -->
+      <div class="col-md mx-auto">
+        <div class="glass-card">
+          <h5>Prevent Plant Disease:</h5>
+          <ol>
+            <li>Follow Good Sanitation Practices.</li>
+            <li>Fertilize to Keep Your Plants Healthy.</li>
+            <li>Inspect Plants Before You Bring Them Home.</li>
+            <li>Allow the Soil to Warm Before Planting.</li>
+            <li>Rotate Crops for a Healthy Vegetable Garden.</li>
+            <li>Provide Good Air Circulation.</li>
+            <li>Remove Diseased Stems and Foliage.</li>
+          </ol>
+          <a target="_blank" href="https://www.thespruce.com/prevent-plant-diseases-in-your-garden-2539511">
+            <button type="button" class="btn-outline-premium mt-2">More Info</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const actualBtn = document.getElementById('actual-btn');
+    const fileChosen = document.getElementById('file-chosen');
+    let capturedFile = null;
+
+    actualBtn.addEventListener('change', function () {
+      fileChosen.textContent = this.files[0].name;
+    });
+
+    document.getElementById('camera-btn').addEventListener('click', function () {
+      document.getElementById('camera-container').style.display = 'block';
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => { document.getElementById('camera-feed').srcObject = stream; })
+        .catch(err => console.error('Camera error:', err));
+    });
+
+    document.getElementById('capture-btn').addEventListener('click', function () {
+      const video = document.getElementById('camera-feed');
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const dataUrl = canvas.toDataURL('image/jpeg');
+      const blob = dataURItoBlob(dataUrl);
+      capturedFile = new File([blob], 'camera_image.jpg', { type: 'image/jpeg' });
+      fileChosen.textContent = capturedFile.name;
+      const preview = document.getElementById('preview');
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+      document.getElementById('camera-container').style.display = 'none';
+    });
+
+    function dataURItoBlob(dataURI) {
+      const byteString = atob(dataURI.split(',')[1]);
+      const arr = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) arr[i] = byteString.charCodeAt(i);
+      return new Blob([arr], { type: 'image/jpeg' });
+    }
+  </script>
+</body>
+</html>

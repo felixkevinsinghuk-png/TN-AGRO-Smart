@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
+.ipynb_checkpoints/
+*.pt
+*.pth
+*.p
+*.pkl
+db_faiss/

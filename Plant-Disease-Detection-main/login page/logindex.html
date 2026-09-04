@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agro Smart | Sign In/Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="logstyle.css">
+  <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<h2 style="font-family: 'Poppins', sans-serif; font-size: 60px; color: white; font-weight: 700;">
+  Agro Smart &nbsp;<img src="crop logo.png" alt="LOGO">
+</h2>
+
+<div class="container" id="container">
+  <div class="form-container sign-up-container">
+    <form id="signupForm">
+      <h1>Create Account</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>Use your mobile number  to register</span>
+      <input type="text" id="Name" placeholder="Name" required />
+      <input type="mobile number " id="Mobile number " placeholder="Mobile number " required />
+      <button type="button" class="button2" onclick="sendOTP()"><strong>Send OTP</strong></button>
+
+      <div id="otpSection" style="display:none;">
+        <input type="text" id="OTP" placeholder="Enter OTP" required />
+        <button class="button2" type="button" onclick="signinOTP()"><strong>Sign In</strong></button>
+      </div>
+      <p id="signup-status"></p>
+    </form>
+  </div>
+
+  <div class="form-container sign-in-container">
+    <form id="signinForm">
+      <h1>Sign in</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>Use your account</span>
+      <input type="mobile number " id="mobile number " placeholder="Mobile number " />
+      <input type="text" id="otpSignIn" placeholder="Enter OTP" />
+      <button class="button2" type="button" onclick="signinOTP()"><strong>Sign In</strong></button>
+    </form>
+  </div>
+
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Welcome Back!</h1>
+        <p>To keep connected with us please login with your mobile number  and OTP</p>
+        <button class="button" id="signIn"><strong>Sign In</strong></button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Vivasayi!</h1>
+        <p>Enter your personal details and start your journey with us</p>
+        <button class="button" id="signUp"><strong>Sign Up</strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="logscript.js"></script>
+</body>
+</html>

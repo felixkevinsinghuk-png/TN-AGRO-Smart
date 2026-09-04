@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+AGRO_Smart
+{% endblock pagetitle %}
+
+{% block body %}
+<style>
+  body {
+    overflow-x: hidden;
+  }
+
+  @media only screen and (max-width: 830px) {
+    .laptop {
+      display: none;
+    }
+  }
+
+  @media (min-width: 830px) and (max-width: 1536px) {
+    .mobile {
+      display: none;
+    }
+  }
+</style>
+
+<!-- Mobile Warning -->
+<div class='mobile p-5'>
+  <div class="row mb-5 text-center text-white">
+    <div class="col-lg-10 mx-auto">
+      <h1 class="display-4" style="padding-top: 2%; font-weight: 400; color: red;"><b>Note✍🏻</b></h1>
+      <p class="lead" style="font-weight: 500; color: black;">Please🙏 Open This Site On Laptop/PC 💻 Screen Only</p>
+      <p class="lead" style="font-weight: 500; color: black;">Thank You 🤝</p>
+    </div>
+  </div>
+</div>
+
+<!-- Title -->
+<div class="row mb-3 text-center laptop" style="padding-top: 40px;">
+  <div class="col-lg-10 mx-auto">
+    <h1 class="display-4" style="font-weight: 700; color: var(--primary); letter-spacing: -1px;">🍁 AGRO_Smart 🍁</h1>
+    <p class="lead" style="color: var(--text-muted); font-size: 1.1rem;">This AI Engine Will Help To Detect Disease From Your Fruits &amp; Vegetables</p>
+  </div>
+</div>
+
+<!-- Image Carousel -->
+<div id="agroCarousel" class="carousel slide laptop mb-5" data-bs-ride="carousel" style="max-width: 85%; margin: auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid var(--glass-border);">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1470" class="d-block w-100" alt="Agriculture 1" style="height: 400px; object-fit: cover;">
+    </div>
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=1470" class="d-block w-100" alt="Agriculture 2" style="height: 400px; object-fit: cover;">
+    </div>
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1576402187874-4d38df4d0169?q=80&w=1470" class="d-block w-100" alt="Agriculture 3" style="height: 400px; object-fit: cover;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#agroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#agroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- AI Engine Button at Bottom -->
+<div class="text-center laptop mt-4 mb-5">
+  <a href="/index">
+    <button class="btn btn-premium" style="font-size: 1.2rem; padding: 14px 50px;">🌿 Launch AI Engine</button>
+  </a>
+</div>
+
+<!-- Carousel Script -->
+<script>
+  const carousel = document.querySelector('#agroCarousel');
+  if (carousel) {
+    new bootstrap.Carousel(carousel, {
+      interval: 2000,
+      ride: 'carousel'
+    });
+  }
+</script>
+
+{% endblock body %}
