@@ -33,5 +33,13 @@ AGRO_Smart is an AI-powered agricultural assistant designed to help farmers and 
    ```
 5. Open your browser and navigate to `http://127.0.0.1:5000/`.
 
+## 🙏 Acknowledgements
+
+This project was inspired by the original Plant Disease Detection work by:
+
+> **[@manthan89-py](https://github.com/manthan89-py)** — [Plant-Disease-Detection](https://github.com/manthan89-py/Plant-Disease-Detection)
+
+The architecture concept, dataset pipeline, and core AI engine idea draw inspiration from their excellent open-source contribution. AGRO_Smart builds upon this foundation with a new premium UI/UX, extended features, and a Firebase-based authentication system.
+
 ---
 *Developed by Felix Kevin.*

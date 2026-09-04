@@ -3,86 +3,419 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register & Login</title>
-
-  <!-- Font Awesome CDN -->
+  <title>AGRO_Smart — Sign In</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-
-  <!-- Firebase Auth Logic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script type="module" src="{{ url_for('static', filename='firebaseauth.js') }}"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #080d0a;
+      background-image:
+        radial-gradient(ellipse at 0% 0%, hsla(253,30%,12%,1) 0, transparent 55%),
+        radial-gradient(ellipse at 100% 0%, hsla(339,55%,18%,1) 0, transparent 55%),
+        radial-gradient(ellipse at 50% 100%, hsla(160,60%,8%,1) 0, transparent 60%);
+      overflow: hidden;
+      color: #e2e8f0;
+    }
+
+    /* Animated floating blobs */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+    body::before {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #a78bfa, transparent 70%);
+      top: -100px; left: -100px;
+    }
+    body::after {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #f472b6, transparent 70%);
+      bottom: -80px; right: -80px;
+      animation-delay: 3s;
+    }
+    @keyframes float {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 30px) scale(1.05); }
+    }
+
+    /* Wrapper handles split layout */
+    .page-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      padding: 40px 20px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    /* Left branding panel */
+    .brand-panel {
+      flex: 1;
+      text-align: left;
+      max-width: 380px;
+    }
+    .brand-logo {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00e676, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .brand-tagline {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .brand-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .brand-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+    .brand-features li .feat-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(167,139,250,0.1);
+      border: 1px solid rgba(167,139,250,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* Glass card */
+    .container {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      width: 420px;
+      padding: 40px 36px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+    .container:hover { transform: translateY(-4px); }
+
+    /* Gradient top border accent */
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 24px 24px 0 0;
+      background: linear-gradient(90deg, #a78bfa, #f472b6, #00e676);
+    }
+
+    .form-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .form-subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.88rem;
+      margin-bottom: 28px;
+    }
+
+    .input-group {
+      padding: 14px 0 8px;
+      position: relative;
+    }
+    .input-group i {
+      position: absolute;
+      color: #a78bfa;
+      bottom: 14px;
+      left: 0;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .input-group:focus-within i { color: #f472b6; }
+
+    input {
+      color: #f8fafc;
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(255,255,255,0.12);
+      padding: 4px 4px 8px 28px;
+      font-size: 0.95rem;
+      font-family: 'Outfit', sans-serif;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      outline: none;
+      border-bottom-color: #f472b6;
+    }
+    input::placeholder { color: transparent; }
+    label {
+      color: #64748b;
+      position: absolute;
+      left: 28px;
+      top: 18px;
+      font-size: 0.9rem;
+      cursor: text;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label {
+      top: 2px;
+      left: 0;
+      font-size: 0.72rem;
+      color: #f472b6;
+      letter-spacing: 0.5px;
+    }
+
+    .recover {
+      text-align: right;
+      font-size: 0.82rem;
+      margin: 2px 0 20px;
+    }
+    .recover a {
+      text-decoration: none;
+      color: #a78bfa;
+      transition: color 0.3s;
+    }
+    .recover a:hover { color: #f472b6; }
+
+    button.btn {
+      width: 100%;
+      padding: 13px;
+      margin-top: 8px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #a78bfa, #f472b6);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(244,114,182,0.3);
+      letter-spacing: 0.5px;
+    }
+    button.btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(244,114,182,0.5);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+    .divider span { color: #475569; font-size: 0.8rem; }
+
+    .icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .icons i {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .icons i:hover {
+      background: rgba(167,139,250,0.1);
+      border-color: rgba(167,139,250,0.3);
+      color: #a78bfa;
+      transform: translateY(-2px);
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+    #signUpButton, #signInButton {
+      color: #a78bfa;
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    #signUpButton:hover, #signInButton:hover {
+      color: #f472b6;
+      text-decoration: underline;
+    }
+
+    .messageDiv {
+      background: rgba(244,114,182,0.1);
+      border: 1px solid rgba(244,114,182,0.3);
+      color: #fda4af;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      animation: fadeOut 7s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Hide brand panel on small screens */
+    @media (max-width: 768px) {
+      .brand-panel { display: none; }
+      .container { width: 100%; max-width: 420px; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Sign Up Container -->
-  <div class="container" id="signup" style="display:none;">
-    <h1 class="form-title">Register</h1>
-    <form method="post" action="">
-      <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" id="fName" placeholder="First Name" required />
-        <label for="fName">First Name</label>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" id="lName" placeholder="Last Name" required />
-        <label for="lName">Last Name</label>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input type="email" id="rEmail" placeholder="Email" required />
-        <label for="rEmail">Email</label>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="rPassword" placeholder="Password" required />
-        <label for="rPassword">Password</label>
-      </div>
-      <button class="btn" id="submitSignUp">Sign Up</button>
-    </form>
-    <p class="or">or</p>
-    <div class="icons">
-      <i class="fab fa-google"></i>
-      <i class="fab fa-facebook"></i>
+
+  <div class="page-wrapper">
+    <!-- Left brand panel -->
+    <div class="brand-panel">
+      <div class="brand-logo">🌱 AGRO_Smart</div>
+      <p class="brand-tagline">
+        AI-powered plant disease detection. Upload a leaf image and get an instant, accurate diagnosis.
+      </p>
+      <ul class="brand-features">
+        <li>
+          <span class="feat-icon">🔬</span>
+          <span>Detects 38+ plant disease classes</span>
+        </li>
+        <li>
+          <span class="feat-icon">⚡</span>
+          <span>Real-time CNN inference on device</span>
+        </li>
+        <li>
+          <span class="feat-icon">💊</span>
+          <span>Supplement & treatment recommendations</span>
+        </li>
+        <li>
+          <span class="feat-icon">🔒</span>
+          <span>Secure Firebase authentication</span>
+        </li>
+      </ul>
     </div>
-    <div class="links">
-      <p>Already Have Account?</p>
-      <button id="signInButton">Sign In</button>
+
+    <!-- Sign Up Form -->
+    <div class="container" id="signup" style="display:none;">
+      <h1 class="form-title">Create Account</h1>
+      <p class="form-subtitle">Join AGRO_Smart today</p>
+      <form method="post" action="">
+        <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="fName" placeholder="First Name" required />
+          <label for="fName">First Name</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="lName" placeholder="Last Name" required />
+          <label for="lName">Last Name</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="rEmail" placeholder="Email" required />
+          <label for="rEmail">Email Address</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="rPassword" placeholder="Password" required />
+          <label for="rPassword">Password</label>
+        </div>
+        <button class="btn" id="submitSignUp">Create Account</button>
+      </form>
+      <div class="divider"><span>or continue with</span></div>
+      <div class="icons">
+        <i class="fab fa-google"></i>
+        <i class="fab fa-facebook-f"></i>
+      </div>
+      <div class="links">
+        <p>Already have an account?</p>
+        <button id="signInButton">Sign In</button>
+      </div>
+    </div>
+
+    <!-- Sign In Form -->
+    <div class="container" id="signIn">
+      <h1 class="form-title">Welcome Back</h1>
+      <p class="form-subtitle">Sign in to continue to AGRO_Smart</p>
+      <form method="post" action="">
+        <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Email" required />
+          <label for="email">Email Address</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Password" required />
+          <label for="password">Password</label>
+        </div>
+        <p class="recover"><a href="#">Forgot Password?</a></p>
+        <button class="btn" id="submitSignIn">Sign In</button>
+      </form>
+      <div class="divider"><span>or continue with</span></div>
+      <div class="icons">
+        <i class="fab fa-google"></i>
+        <i class="fab fa-facebook-f"></i>
+      </div>
+      <div class="links">
+        <p>Don't have an account?</p>
+        <button id="signUpButton">Sign Up</button>
+      </div>
     </div>
   </div>
 
-  <!-- Sign In Container -->
-  <div class="container" id="signIn">
-    <h1 class="form-title">Sign In</h1>
-    <form method="post" action="">
-      <div id="signInMessage" class="messageDiv" style="display:none;"></div>
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input type="email" id="email" placeholder="Email" required />
-        <label for="email">Email</label>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="password" placeholder="Password" required />
-        <label for="password">Password</label>
-      </div>
-      <p class="recover"><a href="#">Recover Password</a></p>
-      <button class="btn" id="submitSignIn">Sign In</button>
-    </form>
-    <p class="or">or</p>
-    <div class="icons">
-      <i class="fab fa-google"></i>
-      <i class="fab fa-facebook"></i>
-    </div>
-    <div class="links">
-      <p>Don't have an account yet?</p>
-      <button id="signUpButton">Sign Up</button>
-    </div>
-  </div>
-
-  <!-- UI Toggle Script -->
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
